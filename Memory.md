@@ -78,14 +78,14 @@ openclaw gateway start
 **Key file locations:**
 - Main config: `~/.openclaw/openclaw.json`
 - API key: `~/.openclaw/agents/main/agent/auth-profiles.json`
-- Gateway token: `12658869350f9e2a6ea4e6df576aced739caa4a6a0886416`
-- Web UI: `http://127.0.0.1:18789/#token=12658869350f9e2a6ea4e6df576aced739caa4a6a0886416`
+- Gateway token: `[stored locally — see openclaw.json]`
+- Web UI: `[local URL — see openclaw.json]`
 - Telegram bot token: stored in openclaw.json
 - LaunchAgents: `~/Library/LaunchAgents/`
 
 **Tools profile:** `"full"` (enabled file read/write and exec access for Jane)
 
-**API credits:** Anthropic console at rbxlive@gmail.com. Credits can take
+****API credits:** Anthropic console [rbxlive account]. Credits can take
 up to an hour to propagate to the API even after showing on dashboard.
 
 ## The Briefings Library
