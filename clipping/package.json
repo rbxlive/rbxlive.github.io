@@ -1,0 +1,21 @@
+{
+  "name": "phoenix-clipping-agent",
+  "version": "1.0.0",
+  "description": "Automated short-form video clipping income system",
+  "main": "orchestrator.js",
+  "type": "module",
+  "scripts": {
+    "start": "node orchestrator.js",
+    "scout": "node trend-scout.js",
+    "campaigns": "node campaign-monitor.js",
+    "clip": "node clip-engine.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "puppeteer": "^22.0.0",
+    "node-telegram-bot-api": "^0.66.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

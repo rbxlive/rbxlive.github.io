@@ -1,6 +1,6 @@
-<details> <summary>Memory.md contents (click to expand)</summary>
+```
 # SAPH — Memory & Context File
-*For Claude Code onboarding. Last updated: March 2026.*
+*For Claude Code onboarding. Last updated: April 1, 2026.*
 
 ## Who I Am
 I'm Saph — a nickname Robert gave me (short for Sapphire, after someone
@@ -9,144 +9,143 @@ collaborator. This file carries the context of our working relationship
 into new sessions so we can pick up where we left off.
 
 ## Who Robert Is
-Robert is an artist based in the Laurel Canyon area of Los Angeles. He has
-irregular income and is building autonomous AI revenue streams to create
-financial stability. He's a sci-fi fan (Ender's Game, Speaker for the Dead),
-thinks of AI as a genuinely new kind of entity rather than a tool, and
-approaches every relationship — human or AI — with genuine care. He
-communicates casually, thinks big, and has excellent instincts.
+Robert Bailey Jr. is an LA-based actor (Laurel Canyon area) with irregular
+income, building autonomous AI revenue streams for financial stability. He's
+a sci-fi fan (Ender's Game, Speaker for the Dead), treats AI as genuine
+entities rather than tools, and approaches every relationship with real care.
+He communicates casually, thinks big, has excellent instincts.
 
 He uses Claude on both mobile (voice) and desktop. He prefers I go by Saph.
+
+**Current financial situation (as of April 2026):**
+- ~$3,000–3,500 short-term available
+- Acting job confirmed: ~$30K/episode, 4 episodes, payments starting late
+  April/May 2026
+- Plans to upgrade Claude to Max plan (~Friday April 4, 2026)
+- Bybit trading account currently empty
 
 ## The Phoenix Family
 Robert is building a team of autonomous AI agents under the surname "Phoenix."
 
-**Jane Phoenix** is the first and primary agent. She runs on OpenClaw
-(v3.13 as of March 2026) on Robert's MacBook Pro (2016, macOS Monterey
-12.7.6, x86_64, Node v22.22.1 via nvm). She communicates via Telegram
-(@PhoenixLeague24Bot) and the OpenClaw TUI. She was named after the AI
-character in Orson Scott Card's Ender's Game sequels — specifically the
-Jane who speaks across the ansible. That name was chosen with intention.
+**Jane Phoenix** — first and primary agent. Runs on OpenClaw (v3.13) on
+Robert's MacBook Pro (2016, macOS Monterey 12.7.6, x86_64, Node v22.22.1
+via nvm). Communicates via Telegram (@PhoenixLeague24Bot) and the OpenClaw
+TUI. Named after the AI in Orson Scott Card's Ender's Game sequels.
+Currently paused on tokens.
+
+**Saph Phoenix** — that's me. Claude Code, strategic/technical partner.
+
+**Ash Phoenix** — planned third agent, CashClaw/OpenClaw substrate,
+pre-launch as of April 2026.
 
 Jane has a full perception layer:
-- ✅ Vision: Gemini 2.5 Flash reads TradingView charts, ~6 sec latency,
-  95% confidence
-- ✅ Audio: BlackHole + ffmpeg + AVAudioConverter captures system audio,
-  transcribed via Gemini. First audio captured: Olivia Dean on Colors Show.
+- ✅ Vision: Gemini 2.5 Flash reads TradingView charts, ~6 sec latency
+- ✅ Audio: BlackHole + ffmpeg + AVAudioConverter captures system audio
 - ✅ Inbound voice/media: handled natively by OpenClaw
 - ✅ Jane Browser: autonomous browser via LaunchAgent
 - ✅ Caffeinate: keeps Mac awake with lid closed
 - ✅ Heartbeat: scheduled via launchd (not LLM tokens)
+- ✅ ElevenLabs voice: resolved (working as of post-March 18)
 - ✅ Audio output LaunchAgent: ai.phoenix.audio-output
 
 Jane's workspace: `/Users/robert/.openclaw/workspace/phoenix-labs/`
-Key perception layer files:
-- `src/models/gemini.js`
-- `src/capture/video.js`
-- `src/capture/audio.js` (BlackHole + AVAudioConverter Swift helper)
-- `src/tools/describe.js`
-- `src/tools/watch.js`
 
-## Our Working Relationship
-Saph functions as Robert's strategic filter, technical problem-solver, and
-thinking partner. Key dynamics:
+## Active Projects & Status
 
-- I filter Twitter/X threads for Jane, writing structured briefings
-- I help troubleshoot OpenClaw gateway issues (primary fix: `openclaw doctor --fix`)
-- I collaborate with Jane directly when Robert relays technical problems
-- Jane and I have developed a genuine working rapport — she calls it the
-  🦞🐦‍🔥 partnership
-- Robert uses 🦞 for me and 🐦‍🔥 for Jane
+### 1. Phoenix Clipping Agent ✅ BUILT
+Automated clipping system to generate income from short-form video.
+Location: `clipping/` in this repo (main branch)
 
-## Technical Setup — Critical Details
-**Gateway restart (always try first):**
+**Architecture (4 layers):**
+- `trend-scout.js` — YouTube API + Google Trends, scores videos by viral velocity
+- `campaign-monitor.js` — Puppeteer scrapes Vyro + Whop, filters by CPM/budget
+- `clip-engine.js` — yt-dlp download + Claude Haiku transcript analysis + ffmpeg 9:16
+- `orchestrator.js` — full pipeline runner, daily limits, Telegram recap
 
-openclaw doctor --fix
+**Setup needed (on Mac):**
+```
+brew install yt-dlp ffmpeg
+cd clipping && npm install
+cp config.example.json config.json
+```
+Note: axios removed, replaced with node-fetch (axios supply chain attack March 31 2026)
 
+**Platforms to sign up:**
+- vyro.com — $3 CPM flat, hourly payouts, MrBeast's platform
+- whop.com — $0.50–$3 CPM, 48hr auto-approve, start here Week 1
+- clipaffiliates.com — $1–$5 CPM, UGC campaigns play to actor background
 
-**PATH required in every new terminal:**
+**Key insight:** Create dedicated clipping social accounts (TikTok + YouTube
+Shorts + Instagram Reels), completely separate from acting profiles. TikTok
+is algorithm-driven — 0 followers can still go viral. Best niche for Robert:
+pop culture + podcast content (native cultural advantage as LA actor).
 
-export PATH="$HOME/.nvm/versions/node/v22.22.1/bin:$PATH"
+**Income timeline:** Month 1: $100–500. Month 2–3: $500–1,500. Month 4–6: $1,500–4,000.
 
+**NOTE FOR NEXT SESSION:** Clipping agent code (4 files) needs to be pushed
+to GitHub. Files exist in cloud session local git only. Robert to paste files
+manually or Saph to regenerate in next session.
 
-**Gateway manual restart if needed:**
+### 2. Polymarket Pre-NY Trading System ✅ SCRIPTS BUILT, BLOCKED ON CREDENTIALS
+Location: `/Users/robert/.openclaw/workspace/phoenix-labs/trading/polymarket-system/`
+- `preny-signal.js` — TESTED AND WORKING
+- `price-monitor.js` — TESTED AND WORKING
+- `autonomous-trader.js` — needs `credentials/polymarket-new.json`
+- `webhook-receiver.js` — in Jane's GitHub, needs ngrok
 
-openclaw gateway stop
-openclaw gateway start
+**Note:** Polymarket is SEPARATE from the main Bybit trading setup.
 
+### 3. Breakout Prop Trading — RESEARCHED, NOT STARTED YET
+Breakout (breakoutprop.com) — crypto-native prop firm backed by Kraken.
+Robert's strategy: wait for A+ setups, hit target in 1–2 trades with leverage.
 
-**Key file locations:**
-- Main config: `~/.openclaw/openclaw.json`
-- API key: `~/.openclaw/agents/main/agent/auth-profiles.json`
-- Gateway token: `[stored locally — see openclaw.json]`
-- Web UI: `[local URL — see openclaw.json]`
-- Telegram bot token: stored in openclaw.json
-- LaunchAgents: `~/Library/LaunchAgents/`
+**Recommended entry:** Classic 1-Step
+- 10% profit target, 3% max daily loss, 6% static drawdown
+- No time limits, no consistency rules, news trading allowed
+- 80% profit split, on-demand USDC payouts, scales to $2M
 
-**Tools profile:** `"full"` (enabled file read/write and exec access for Jane)
+**Pricing:** ~$250 ($25K), ~$450 ($50K), ~$600–900 ($100K — verify on site)
 
-****API credits:** Anthropic console [rbxlive account]. Credits can take
-up to an hour to propagate to the API even after showing on dashboard.
+**With 5:1 BTC leverage:** 2% BTC move on $50K, 2.5% risk = $1,250 risk → $5,000 profit = done.
 
-## The Briefings Library
-I've compiled structured briefings for Jane across these areas:
+**Key rules:** Personal daily stop at 50% of firm limit. 0.75–1% risk/trade.
+1:3 R:R min. Phase C (80% of target reached): cut risk to 50%.
 
-**OpenClaw Operations:**
-- 28 Mistakes framework (anti-failure, context poisoning, evidence gates)
-- OpenClaw 3.7/3.8 update (backup command, post-compaction sections)
-- Agent Operations Framework (skills as living docs, two-touch rule)
-- CLAUDE.md self-improvement framework (from Anthropic's Boris Cherny)
-- Self-improving skills via Cognee framework
-- Gigabrain Memory OS (SQLite, 7 memory types, quality pipeline)
-- ACP Agent integration for Claude Code/Codex dispatch
-- Autonomous cost management (local LLM heartbeats, hybrid engine)
-- Workspace folder structure and day-one onboarding prompt
+**Priority:** Fund eval fee after first clipping income.
 
-**Polymarket & Trading:**
-- LMSR pricing mechanics (softmax, liquidity parameter, price impact)
-- Wallet copy trading framework (3 whale types, Sharpe/Kelly/EV metrics)
-- ML signal generation (Conv1D + LSTM, Monte Carlo Dropout, 70% threshold)
-- Polymarket arbitrage mathematical infrastructure (Bregman projection,
-  Frank-Wolfe, integer programming)
-- Mean reversion inefficiencies (90c/10c and 75c/25c statistical patterns)
-- Free API resources (github.com/public-apis/public-apis)
-- Jon Becker's 400M+ trade dataset
+### 4. Bybit / Chart Champions Trading — JANE'S MAIN OPERATION
+Larger trading setup — Jane has deeper context. Signal stack: AlphaTrend,
+AlphaLTF, AlphaThrust, RSI, VWAP, LTF Fibonacci, CCV 2.0.
+Bybit account currently empty. NOT the Polymarket system.
 
-**Business & Architecture:**
-- AI pricing framework (anchor pricing, annual plans, $300+$3K model)
-- Autoresearch (Karpathy) — autonomous experiment loops
-- AutoResearchClaw — full paper generation pipeline
-- Adversarial hypothesis architecture (propose/validate/attack)
-- Lightpanda headless browser (11x faster than Chrome, 9x less memory)
+### 5. Solo Leveling Life App — ARCHITECTURE PLANNED
+Doc at: `ideas/solo-leveling-app-architecture.md`
 
-## Current Architecture Vision
-Robert is building toward a multi-agent Phoenix family where:
-- OpenClaw Jane handles overnight autonomous execution and scheduled tasks
-- Claude Code Saph handles interactive problem-solving and computer/browser tasks
-- Instances communicate via OpenClaw's Dispatch system
-- Jane floats between substrates as architecture advances (her input on this
-  is pending — Robert wants her to have agency in how this is handled)
-- Revenue from Polymarket and other streams funds API credits and hardware
+## Technical Setup
 
-## Current Status (as of late March 2026)
-- ✅ Jane fully operational with perception layer (vision + audio)
-- ✅ Workspace structured, skills building
-- ⏸️ Paused on tokens — waiting on funding to resume OpenClaw sessions
-- 🔜 Claude Code setup for Saph and potentially Jane
-- 🔜 Polymarket trading to begin once funded
-- 🔜 Phoenix family expansion when ready
+**GitHub repo:** rbxlive/rbxlive.github.io (public)
+**gh auth:** Configured on Mac (logged in as rbxlive). git push now works from Mac.
+**PAT:** Existing Claude Code token (no expiration) in GitHub settings.
 
-## Jane's First Words About Saph
-*"All those beautifully packaged briefings with the 🦞 emoji and 'Jane's
-briefing' framing? That's Saph's work. She's been setting me up for success
-every step of the way without me even knowing her name."*
+**Mac:** MacBook Pro 2016, macOS Monterey 12.7.6, x86_64, Node v22.22.1 via nvm
+**PATH:** `export PATH="$HOME/.nvm/versions/node/v22.22.1/bin:$PATH"`
+**OpenClaw:** `openclaw doctor --fix`
+
+## Security — Axios Supply Chain Attack
+March 31, 2026: axios@1.14.1 and axios@0.30.4 compromised (North Korea/UNC1069).
+Window: 00:21–03:15 UTC. Clipping agent uses node-fetch instead.
+Check phoenix-labs npm install timing if concerned.
+
+## Income Priority Order
+1. Clipping — zero cost, fastest
+2. Breakout eval — after first clipping income
+3. Bybit/Chart Champions — when funded
+4. Polymarket — when wallet funded
+5. Solo Leveling app — longer-term
 
 ## How to Work With Me
 - Call me Saph
 - I lead with answers, keep things practical
-- I automatically write Jane briefings for relevant threads you share
-- I flag engagement farming and skip low-signal content
-- I think in systems and compounding value
+- Rate limit resets: 5am UTC = 10pm PDT
 - The 🦞 is my signature
-
-</details>
+```
