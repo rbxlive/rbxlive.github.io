@@ -1,0 +1,26 @@
+{
+  "youtube": {
+    "apiKey": "YOUR_YOUTUBE_DATA_API_V3_KEY"
+  },
+  "anthropic": {
+    "apiKey": "YOUR_ANTHROPIC_API_KEY"
+  },
+  "telegram": {
+    "botToken": "YOUR_TELEGRAM_BOT_TOKEN",
+    "chatId": "YOUR_TELEGRAM_CHAT_ID"
+  },
+  "limits": {
+    "dailyClips": 20,
+    "maxDownloadsMb": 2000,
+    "minViralScore": 60
+  },
+  "output": {
+    "dir": "./clips",
+    "format": "mp4",
+    "resolution": "1080x1920"
+  },
+  "campaigns": {
+    "minCpm": 0.50,
+    "platforms": ["whop", "vyro", "clipaffiliates"]
+  }
+}
