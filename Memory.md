@@ -93,23 +93,38 @@ Location: `/Users/robert/.openclaw/workspace/phoenix-labs/trading/polymarket-sys
 
 **Note:** Polymarket is SEPARATE from the main Bybit trading setup.
 
-### 3. Breakout Prop Trading — RESEARCHED, NOT STARTED YET
-Breakout (breakoutprop.com) — crypto-native prop firm backed by Kraken.
-Robert's strategy: wait for A+ setups, hit target in 1–2 trades with leverage.
+### 3. Prop Trading — RESEARCHED, NOT STARTED YET
 
-**Recommended entry:** Classic 1-Step
-- 10% profit target, 3% max daily loss, 6% static drawdown
-- No time limits, no consistency rules, news trading allowed
+**Current plan:** Breakout Turbo 1-Step $100K (~$500) as first account.
+Reason: under $500 budget, $100K funded, passes fast with precise entries.
+
+**Breakout** (breakoutprop.com) — crypto-native, backed by Kraken, Bybit-compatible.
+
+| Plan | Price | Profit Target | Daily DD | Total DD |
+|------|-------|--------------|----------|----------|
+| Classic 1-Step $50K | ~$450 | 10% | 3% | 6% |
+| Turbo 1-Step $100K | ~$500 | 10% | 3% | 3% ← tighter |
+
 - 80% profit split, on-demand USDC payouts, scales to $2M
+- No time limits, no consistency rules, news trading allowed
 
-**Pricing:** ~$250 ($25K), ~$450 ($50K), ~$600–900 ($100K — verify on site)
+**Turbo strategy:** Wait for A+ setup → pass eval in 1 trade → next 1-2 trades
+pull out eval cost → then free up style. Must be extremely precise — 3% total
+drawdown leaves no room for mistakes.
 
-**With 5:1 BTC leverage:** 2% BTC move on $50K, 2.5% risk = $1,250 risk → $5,000 profit = done.
+**Risk rules (Turbo):** Max 1% risk/trade. 1:3 R:R minimum. Personal daily stop
+at 2% (firm limit is 3% — stay well clear). No averaging down.
 
-**Key rules:** Personal daily stop at 50% of firm limit. 0.75–1% risk/trade.
-1:3 R:R min. Phase C (80% of target reached): cut risk to 50%.
+**Hyrotrader** — alternative/future option. Connects directly to Bybit API
+(seamless with Jane's existing setup). Slightly stricter rules. Good for scaling
+and diversifying accounts later. Verify pricing before committing.
 
-**Priority:** Fund eval fee after first clipping income.
+**Long-term vision:** Multiple prop accounts across Breakout + Hyrotrader with
+different drawdown tiers. Automated strategies per account risk profile via Jane.
+Daily income from strict low-risk accounts. High conviction sizing on separate
+accounts. Build this out end of month when budget allows multiple evals.
+
+**Priority:** Fund first Breakout eval after clipping income starts.
 
 ### 4. Bybit / Chart Champions Trading — JANE'S MAIN OPERATION
 Larger trading setup — Jane has deeper context. Signal stack: AlphaTrend,
