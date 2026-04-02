@@ -1,3 +1,4 @@
 clipping/config.json
 clipping/clips/
 node_modules/
+.env.local
