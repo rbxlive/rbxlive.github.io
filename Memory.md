@@ -174,18 +174,19 @@ HTF/LTF SUITE VALIDATION RESULTS (BTC/USD daily, 3600 bars):
   Squeezes are volatility buildups; Caution/Danger fire well after the breakout.
   Count correlation with squeezes is LOOSE/COINCIDENTAL — do not use as squeeze proxies.
   Exact trigger formula unknown (likely ATR target or momentum peak) — TODO
-- Squeeze (squeezeOn): not matching TV yet — "high sensitivity" KC params unknown — TODO
-  HIGH SENSITIVITY INVESTIGATION STATUS (session 2 end):
-  - Approach of matching Caution/Danger timing to squeeze transitions was WRONG
-    (Caution/Danger are not squeeze indicators per Robert's correction above)
-  - Best empirical result: period=9 for KC/BB in high sensitivity → 48/67 timing
-    matches vs Caution bars — but this was measuring wrong thing, result is unreliable
-  - True high sensitivity parameter: internal boolean toggle, no exposed value
-  - UNRESOLVED — to crack: would need squeeze shading column in CSV export, OR
-    export the squeeze histogram directly as an indicator panel
-  - WORKAROUND: standard TTM Squeeze params (bbPeriod=20, bbMult=2, kcPeriod=20,
-    kcMult=1.5) are solid for normal sensitivity. High sensitivity adds ~67% more
-    squeezes empirically — likely smaller kcMult (e.g. 1.0) or smaller period
+- Squeeze + High Sensitivity: ✅ RESOLVED (session 3, April 2, 2026)
+  - BB bands IDENTICAL between high/normal exports → bbMult=2.0, bbPeriod=20 confirmed
+  - Only KC multiplier changes: Normal=kcMult 1.5, High=kcMult 2.0
+  - Robert confirmed: "High sensitivity shows squeeze starting earlier and sometimes
+    shows squeeze where normal shows none at all" → wider KC = earlier detection ✅
+  - Implemented as highSensitivity=true option in htfLtfSuite()
+  ARROW LOGIC: ✅ FULLY RESOLVED (session 3)
+  - 100% of big arrows occur at BB band crossovers (71/71 confirmed)
+  - 30.5% of BB crossovers become arrows — gated by recent squeeze (within 15 bars)
+  - Momentum does NOT need to align with arrow direction
+  - arrowMomentumDiv=true when momentum DISAGREES → fakeout candidate signal
+    (2021-11-08 BTC $67K top: bull arrow + negative momentum = classic fakeout)
+  - Small arrows: BB midline (SMA20) crossover, same squeeze gate, no big-arrow overlap
 
 TV SETTINGS PANEL CONFIRMED (April 2026):
 - Inputs: Use High Sensitivity (bool), Show Squeezes, Show TD9, Show Caution/Danger,
@@ -220,12 +221,15 @@ INDICATORS STILL NEEDING CSV VALIDATION (priority order):
 - High Sensitivity: BLOCKED — cannot validate without squeeze shading in CSV.
   Skip for now; use normal sensitivity (kcMult=1.5) in production.
 
-SESSION 3 START CHECKLIST:
+SESSION 4 START CHECKLIST:
 1. Read Memory.md (this file) — you're caught up
 2. git checkout claude/continue-from-memory-euy8f && git pull origin claude/continue-from-memory-euy8f
 3. Set git remote: git remote set-url origin "https://rbxlive:${GITHUB_TOKEN}@github.com/rbxlive/rbxlive.github.io.git"
-4. First task: LTF 1H export validation OR Alpha RSI validation (Robert's call)
-5. Trading Alpha expires ~April 4 — prioritize CSV exports before then
+4. First task: LTF 1H export validation (Trading Alpha expires ~April 4!)
+   → In TV browser, switch BTC chart to 1H, load HTF/LTF indicator only
+   → Right-click → Export chart data → mv "/Users/robert/Downloads/INDEX_BTCUSD, 1H.csv" ~/rbxlive.github.io/ltf-1h-export.csv
+   → git add + push, then run validate-htf.js against it
+5. Then: Alpha RSI, Alpha Volume, Alpha Thrust (in that priority order)
 
 **Pine Script versions** — Saph to write TV-compatible versions of all
    indicators so Robert can see them visually on TradingView charts.
