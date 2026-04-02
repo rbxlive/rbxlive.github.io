@@ -27,7 +27,18 @@
  *    release (empirically 79-89% match vs TV). True squeeze-based logic requires
  *    resolving the "high sensitivity" KC parameter — TODO.
  *
- * 4. SQUEEZE FAKEOUT (composite signal — requires AlphaTrend + HTF/LTF together)
+ * CAUTION/DANGER X SIGNALS (HTF Premium only — NOT on LTF Suite)
+ *    Yellow X = Caution: first leg of squeeze breakout is nearing its end
+ *    Red X    = Danger:  first leg of squeeze breakout IS over
+ *    Always fire as a pair (one Caution + one Danger per squeeze period, 1-2 bars apart).
+ *    Count matches squeeze period count exactly.
+ *    Use case: risk management — de-risk or take profit after squeeze breakout.
+ *    Also useful for identifying dead-cat bounces after support breaks.
+ *    Exact formula unknown (likely ATR-based target or momentum peak detection).
+ *    NOT currently implemented — marked as TODO.
+ *    Reference CSV columns: "Caution" (col 15), "Danger" (col 16) in TV export.
+ *
+ * 5. SQUEEZE FAKEOUT (composite signal — requires AlphaTrend + HTF/LTF together)
  *    Definition: squeeze active/recently released + AlphaTrend reversalCandle prints
  *                → the breakout is FAKE, a violent reversal is incoming.
  *    This is one of the most powerful signals in the suite. Signaled 2021 BTC top ($63k)

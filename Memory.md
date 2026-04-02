@@ -165,7 +165,12 @@ HTF/LTF SUITE VALIDATION RESULTS (BTC/USD daily, 3600 bars):
 - BB bands (OB/OS in CSV = BB upper/lower): ~1% error ✅
 - Big arrows (confirmed breakout): 79-89% recall using BB-crossover+momentum proxy ✅
 - Small arrows (potential breakout): still needs work — fires during squeeze (not at release)
-- Caution/Danger columns: unknown — NOT mentioned in official docs, separate toggle feature
+- Caution/Danger columns: NOW IDENTIFIED — these are the "X signals" (HTF Premium only, not on LTF)
+  Yellow X = Caution (first leg nearing end), Red X = Danger (first leg IS over)
+  Always perfectly paired (1 Caution + 1 Danger per squeeze period, 1-2 bars apart)
+  Count matches squeeze period count exactly (40 normal / 67 high sensitivity)
+  Use: risk management / profit-taking after squeeze breakout
+  Exact trigger formula unknown (likely ATR target or momentum peak) — TODO
 - Squeeze (squeezeOn): not matching TV yet — "high sensitivity" KC params unknown — TODO
 
 KEY FINDINGS FROM OFFICIAL DOCS (April 2026):
