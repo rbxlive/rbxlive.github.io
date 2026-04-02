@@ -117,14 +117,14 @@ Cost to renew: ~$2K/year. Decision: let it lapse, use our reconstructed library.
 
 | File | Confidence | Notes |
 |---|---|---|
-| `alpha-trend.js` | ✅ HIGH | ATR channel, MFI/RSI filter, crossover signals, reversal candles, topping "T", micro trend dots. coeff=1.5, ap=14 |
-| `htf-ltf-suite.js` | ✅ HIGH | TTM Squeeze (BB inside KC), momentum histogram, breakout arrows (potential+confirmed), trend bars, TD9 at 8/9 |
-| `alpha-rsi.js` | ✅ HIGH | 3-line smoothed RSI, momentum crosses, bull/bear divergences, OB/OS signals |
-| `alpha-volume.js` | ✅ HIGH | Rolling percentile thresholds for high/extreme volume (red/green lines) |
+| `alpha-trend.js` | ✅ VALIDATED | CSV validated: 3.27% error, 91–93% micro trend match. Production ready. coeff=1.5, ap=14 |
+| `htf-ltf-suite.js` | ✅ VALIDATED | CSV validated. highSensitivity=true uses kcMult=2.0 (wider KC = earlier squeeze detection). Arrow logic fixed: squeeze gate replaces wrong momentum filter; arrowMomentumDiv flag added for fakeout detection. |
+| `alpha-rsi.js` | ✅ HIGH | 3-line smoothed RSI, momentum crosses, bull/bear divergences, OB/OS signals. CSV export pending. |
+| `alpha-volume.js` | ✅ HIGH | Rolling percentile thresholds for high/extreme volume (red/green lines). CSV export pending. |
 | `ltf-fibonacci.js` | ✅ HIGH | Auto-fib with swing detection, all levels + extensions (1.272, 1.618) |
 | `alpha-stops.js` | ✅ HIGH | ATR trailing stop, period=11 (CONFIRMED), Low-Risk mult=1.5, High-Risk mult=3.0 (CONFIRMED). User sets direction (long/short) and risk at entry. Plots as dots on price chart. NOT auto-flipping — set once per trade. getStopLevel() convenience export. |
-| `phantom.js` | ✅ HIGH | Smoothed Z-score histogram. Formula: EMA((close-SMA)/stdev, smoothing). Purple bars above zero (bull), pink below (bear). ±3 scale CONFIRMED from chart images. Zero-line flip signals, leading flip signals, divergences. period=100, smoothing=10. |
-| `alpha-thrust.js` | ✅ MED | Buying/selling pressure via price position×volume. green/red/yellow + change of powers |
+| `phantom.js` | ⚠️ RECONSTRUCTED | Alpha Vault exclusive — no CSV possible (Robert never had access). Final reconstruction from docs/Discord. Smoothed Z-score histogram, ±3 scale, purple/pink bars. Cannot be further validated via export. |
+| `alpha-thrust.js` | ✅ MED | Buying/selling pressure via price position×volume. green/red/yellow + change of powers. CSV export pending (lowest priority). |
 | `alpha-sr.js` | ✅ MED | Swing-point clustering into S/R zones with touch counts |
 | `utils.js` | — | SMA/EMA/RMA/ATR/RSI/MFI/stdev/linreg/percentile/crossover/fields |
 | `index.js` | — | Barrel export |
@@ -135,17 +135,17 @@ Cost to renew: ~$2K/year. Decision: let it lapse, use our reconstructed library.
 - Both Phantom and Alpha Stops are Alpha Vault exclusives (Robert never had access)
 - CCV 2.0 is Chart Champions strategy, NOT part of Trading Alpha suite
 
-**NEXT ACTIONS for indicators:**
-1. **Chart data exports** (tonight/tomorrow while subscription active):
-   Export TradingView chart data (right-click → Export chart data) with ONE
-   indicator loaded at a time. Shows OHLCV + indicator values in CSV.
-   Priority order: Alpha Thrust → AlphaTrend → HTF/LTF Suite → Phantom
-   Share CSVs with Saph to validate formulas and adjust if needed.
-2. **Pine Script versions** — Saph to write TV-compatible versions of all
-   indicators so Robert can see them visually on TradingView charts.
-   Robert has access to everything except Phantom + Alpha Stops until expiry.
-3. **Jane integration** — Wire trading/indicators/ into Jane's autonomous-trader.js
-   in phoenix-labs, replacing TradingView alert webhooks with direct OHLCV calls.
+**NEXT ACTIONS for indicators (before April 4 subscription expiry):**
+Priority order for CSV exports:
+1. LTF 1H — same HTF/LTF Suite indicator, just 1H timeframe
+2. Alpha RSI
+3. Alpha Volume
+4. Alpha Thrust (lowest priority)
+Share CSVs with Saph to validate formulas and adjust if needed.
+
+**Longer term:**
+- Pine Script versions of all indicators (visual verification on TradingView)
+- Jane integration — wire trading/indicators/ into autonomous-trader.js
 
 ### 3. Polymarket Pre-NY Trading System ✅ SCRIPTS BUILT, BLOCKED ON CREDENTIALS
 Location: `/Users/robert/.openclaw/workspace/phoenix-labs/trading/polymarket-system/`
