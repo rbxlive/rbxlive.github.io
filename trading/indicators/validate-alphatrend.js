@@ -34,18 +34,19 @@ for (let i = 1; i < lines.length; i++) {
   const cols = lines[i].split(',');
   if (cols.length < 15) continue;
 
-  const time  = parseInt(cols[0]);
-  const open  = parseFloat(cols[1]);
-  const high  = parseFloat(cols[2]);
-  const low   = parseFloat(cols[3]);
-  const close = parseFloat(cols[4]);
-  const bull  = parseFloat(cols[12]);  // Bullish Micro Trend
-  const bear  = parseFloat(cols[13]);  // Bearish Micro Trend
-  const at    = parseFloat(cols[14]);  // Alpha Track
+  const time   = parseInt(cols[0]);
+  const open   = parseFloat(cols[1]);
+  const high   = parseFloat(cols[2]);
+  const low    = parseFloat(cols[3]);
+  const close  = parseFloat(cols[4]);
+  const bull   = parseFloat(cols[12]);  // Bullish Micro Trend
+  const bear   = parseFloat(cols[13]);  // Bearish Micro Trend
+  const at     = parseFloat(cols[14]);  // Alpha Track
+  const volume = parseFloat(cols[15]);  // Volume
 
   if (isNaN(close) || isNaN(high) || isNaN(low)) continue;
 
-  candles.push({ time, open, high, low, close, volume: 1 });  // volume=1 fallback (no vol in CSV)
+  candles.push({ time, open, high, low, close, volume: isNaN(volume) ? 1 : volume });
   tvAt.push(at);
   tvMicroBull.push(bull === 1);
   tvMicroBear.push(bear === 1);
@@ -55,7 +56,7 @@ for (let i = 1; i < lines.length; i++) {
 // Note: CSV has no volume column — AlphaTrend uses MFI which needs volume.
 // We'll test with useMFI: false (RSI fallback) since there's no volume data.
 // If results are poor, the real indicator IS using MFI — we'd need a vol-included export.
-const results = alphaTrend(candles, { coeff: 1.5, ap: 14, useMFI: false });
+const results = alphaTrend(candles, { coeff: 1.5, ap: 14, useMFI: true });
 
 // ── Compare Alpha Track (AT line) ─────────────────────────────────────────────
 console.log('=== ALPHA TRACK LINE COMPARISON ===');
