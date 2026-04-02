@@ -16,8 +16,14 @@
  *   - initialStop: where to place your stop on trade entry
  *   - riskReward:  suggested TP levels at 1:1, 1:2, and 1:3 R:R
  *
- * Parameters:
- *   period      {number} 14  — ATR period
+ * Visual behavior confirmed from chart images:
+ *   Plots as DOTS directly on the price chart (not a separate pane).
+ *   Green dots trail BELOW price during uptrend (long stop).
+ *   Red dots trail ABOVE price during downtrend (short stop).
+ *   Label shows "Alpha Stops Long High [period]" — e.g. "Long High 11".
+ *
+ * Parameters confirmed from chart label "Alpha Stops Long High 11":
+ *   period      {number} 11  — ATR period (confirmed from chart)
  *   multiplier  {number} 2.0 — ATR multiplier (distance from price)
  *                              2.0 is standard; use 1.5 for scalping,
  *                              3.0 for swing trading
@@ -26,7 +32,7 @@
 import { atr, fields } from './utils.js';
 
 export function alphaStops(candles, options = {}) {
-  const { period = 14, multiplier = 2.0 } = options;
+  const { period = 11, multiplier = 2.0 } = options;
   const { highs, lows, closes, times } = fields(candles);
   const n = closes.length;
 
