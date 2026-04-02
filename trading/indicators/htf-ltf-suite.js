@@ -72,11 +72,12 @@
  *    Signals print at count 8 (early warning) and 9 (full signal).
  *
  * Parameters:
- *   bbPeriod    {number} 20   — Bollinger Band period
+ *   bbPeriod    {number} 20   — Bollinger Band period (hardcoded in TV, not user-adjustable)
  *   bbMult      {number} 2.0  — BB standard deviation multiplier
  *   kcPeriod    {number} 20   — Keltner Channel period
  *   kcMult      {number} 1.5  — KC ATR multiplier
- *   momentumLen {number} 12   — Linear regression period for momentum
+ *   momShort    {number} 9    — Momentum delta period (CONFIRMED from TV settings panel)
+ *   momLong     {number} 26   — Momentum linreg period (CONFIRMED from TV settings panel)
  *   fastEma     {number} 21   — Fast EMA for trend bars
  *   slowEma     {number} 55   — Slow EMA for trend bars
  */
@@ -85,13 +86,14 @@ import { sma, ema, atr, stdev, highest, lowest, linreg, fields } from './utils.j
 
 export function htfLtfSuite(candles, options = {}) {
   const {
-    bbPeriod    = 20,
-    bbMult      = 2.0,
-    kcPeriod    = 20,
-    kcMult      = 1.5,
-    momentumLen = 12,
-    fastEmaPer  = 21,
-    slowEmaPer  = 55,
+    bbPeriod   = 20,
+    bbMult     = 2.0,
+    kcPeriod   = 20,
+    kcMult     = 1.5,
+    momShort   = 9,    // delta period — confirmed from TV settings
+    momLong    = 26,   // linreg period — confirmed from TV settings
+    fastEmaPer = 21,
+    slowEmaPer = 55,
   } = options;
 
   const { highs, lows, closes, times } = fields(candles);
@@ -114,13 +116,16 @@ export function htfLtfSuite(candles, options = {}) {
   );
 
   // ── 2. Momentum Histogram ──────────────────────────────────────────────────
-  // delta = close − average of (highest high + lowest low + SMA) / 2
-  const highN = highest(highs, bbPeriod);
-  const lowN  = lowest(lows,   bbPeriod);
+  // delta = close − midpoint(momShort): (highest + lowest + sma) / 3
+  // momentum = linreg(delta, momLong)
+  // momShort=9 (delta period), momLong=26 (linreg period) confirmed from TV settings panel
+  const highN   = highest(highs, momShort);
+  const lowN    = lowest(lows,   momShort);
+  const smaMom  = sma(closes,    momShort);
   const delta = closes.map((c, i) =>
-    isNaN(highN[i]) ? NaN : c - (highN[i] + lowN[i] + bbBasis[i]) / 3
+    isNaN(highN[i]) ? NaN : c - (highN[i] + lowN[i] + smaMom[i]) / 3
   );
-  const momentum = linreg(delta, momentumLen);
+  const momentum = linreg(delta, momLong);
 
   const momentumColor = momentum.map((m, i) => {
     if (isNaN(m)) return 'neutral';

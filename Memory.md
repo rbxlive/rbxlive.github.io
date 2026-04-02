@@ -173,6 +173,14 @@ HTF/LTF SUITE VALIDATION RESULTS (BTC/USD daily, 3600 bars):
   Exact trigger formula unknown (likely ATR target or momentum peak) — TODO
 - Squeeze (squeezeOn): not matching TV yet — "high sensitivity" KC params unknown — TODO
 
+TV SETTINGS PANEL CONFIRMED (April 2026):
+- Inputs: Use High Sensitivity (bool), Show Squeezes, Show TD9, Show Caution/Danger,
+  Use Momentum bar colors, Momentum Length Short=9, Momentum Length Long=26
+- BB/KC periods NOT user-adjustable — hardcoded internally
+- High Sensitivity is a boolean toggle with no exposed numeric params (internal hardcode)
+- Implementation updated: momShort=9 (delta period), momLong=26 (linreg period) ✅
+- Bar colors: Color0=green, Color1=red, Color2=white, Color3=grey ✅
+
 KEY FINDINGS FROM OFFICIAL DOCS (April 2026):
 - Squeeze = yellow/brown shading on bars. BB inside KC = squeeze ON.
 - Small arrows appear DURING the squeeze (lower probability, for aggressive traders)
