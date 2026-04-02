@@ -21,6 +21,14 @@
   },
   "campaigns": {
     "minCpm": 0.50,
-    "platforms": ["whop", "vyro", "clipaffiliates"]
+    "platforms": ["whop", "vyro", "clipaffiliates"],
+    "debug": false,
+    "sessions": {
+      "_comment": "Optional. Paste your browser cookies here to access auth-gated campaign pages.",
+      "_howto": "DevTools → Application → Cookies → copy the Cookie header value for each domain.",
+      "vyro": "",
+      "whop": "",
+      "clipaffiliates": ""
+    }
   }
 }
