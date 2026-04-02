@@ -52,7 +52,7 @@ Jane's workspace: `/Users/robert/.openclaw/workspace/phoenix-labs/`
 
 ## Active Projects & Status
 
-### 1. Phoenix Clipping Agent ✅ BUILT ✅ ON GITHUB
+### 1. Phoenix Clipping Agent ✅ BUILT ✅ ON GITHUB ✅ RUNNING
 Automated clipping system to generate income from short-form video.
 Location: `clipping/` in this repo (main branch) — 6 files pushed April 1 2026
 
@@ -62,13 +62,20 @@ Location: `clipping/` in this repo (main branch) — 6 files pushed April 1 2026
 - `clip-engine.js` — yt-dlp download + Claude Haiku transcript analysis + ffmpeg 9:16
 - `orchestrator.js` — full pipeline runner, daily limits, Telegram recap
 
-**Setup needed (on Mac):**
+**Mac setup (COMPLETE):**
+- yt-dlp: installed via standalone binary (brew fails on macOS 12)
+- ffmpeg: installed via standalone binary + xattr quarantine fix
+- npm install: done in `clipping/` folder
+- config.json: fully populated with all 4 keys
+- First run: 11 viral candidates found, Telegram recap received ✅
+- 0 campaigns returned — campaign scraper CSS selectors need tuning (next task)
+
+**To run on Mac:**
 ```
-brew install yt-dlp ffmpeg
-cd clipping && npm install
-cp config.example.json config.json
+cd ~/rbxlive.github.io/clipping
+export PATH="$HOME/.nvm/versions/node/v22.22.1/bin:$PATH"
+node orchestrator.js
 ```
-Note: axios removed, replaced with node-fetch (axios supply chain attack March 31 2026)
 
 **Platforms to sign up:**
 - vyro.com — $3 CPM flat, hourly payouts, MrBeast's platform
@@ -82,7 +89,10 @@ pop culture + podcast content (native cultural advantage as LA actor).
 
 **Income timeline:** Month 1: $100–500. Month 2–3: $500–1,500. Month 4–6: $1,500–4,000.
 
-**NEXT ACTION:** Sign up on Whop + set up dedicated TikTok/YouTube Shorts accounts. Then run setup on Mac.
+**NEXT ACTIONS:**
+1. Fix campaign scraper CSS selectors (Saph task — inspect Whop/Vyro/ClipAffiliates live pages)
+2. Sign up on Whop + create dedicated TikTok/YouTube Shorts accounts
+3. Name accounts based on what niche the trend data surfaces
 
 ### 2. Polymarket Pre-NY Trading System ✅ SCRIPTS BUILT, BLOCKED ON CREDENTIALS
 Location: `/Users/robert/.openclaw/workspace/phoenix-labs/trading/polymarket-system/`
