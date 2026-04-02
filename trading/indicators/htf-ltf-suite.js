@@ -28,10 +28,23 @@
  *    resolving the "high sensitivity" KC parameter — TODO.
  *
  * 4. SQUEEZE FAKEOUT (composite signal — requires AlphaTrend + HTF/LTF together)
- *    Definition: squeeze is active + breakout arrow fires + AlphaTrend reversalCandle
- *                prints → the breakout is FAKE, a violent reversal is incoming.
- *    This is one of the most powerful reversal signals in the suite.
- *    Detection: squeezeOn[i] && alphaTrendResult[i].reversalCandle
+ *    Definition: squeeze active/recently released + AlphaTrend reversalCandle prints
+ *                → the breakout is FAKE, a violent reversal is incoming.
+ *    This is one of the most powerful signals in the suite. Signaled 2021 BTC top ($63k)
+ *    and 2021 BTC bottom ($29k, 60% return trade).
+ *
+ *    Two valid fakeout scenarios:
+ *      a) Reversal bar DURING squeeze (squeezeOn && reversalCandle)
+ *      b) Reversal bar AFTER squeeze breakout (within ~3 bars of squeeze release)
+ *
+ *    CONFIRMATION REQUIRED: fakeout is only valid when the bar AFTER the reversal bar
+ *    closes in the reversal direction (below R bar for bearish, above for bullish).
+ *    Same confirmation rules as standard AlphaTrend reversal bars.
+ *
+ *    Detection (Jane's signal layer):
+ *      const recentSqueeze = squeezeOn[i] || squeezeOn[i-1] || squeezeOn[i-2] || squeezeOn[i-3];
+ *      const fakeout = recentSqueeze && alphaTrendResult[i].reversalCandle;
+ *      const fakeoutConfirmed = fakeout[i-1] && (bearish ? close[i] < close[i-1] : close[i] > close[i-1]);
  *    NOT computed inside this function — must be combined in Jane's signal layer.
  *
  * 5. MOMENTUM BARS (green / red bars on chart)
