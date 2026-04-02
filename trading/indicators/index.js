@@ -34,7 +34,7 @@ export { htfLtfSuite }  from './htf-ltf-suite.js';
 export { alphaRsi }     from './alpha-rsi.js';
 export { alphaThrust }  from './alpha-thrust.js';
 export { alphaVolume }  from './alpha-volume.js';
-export { alphaStops }   from './alpha-stops.js';
+export { alphaStops, getStopLevel } from './alpha-stops.js';
 export { ltfFibonacci } from './ltf-fibonacci.js';
 export { alphaSR }      from './alpha-sr.js';
 export { phantom }      from './phantom.js';
