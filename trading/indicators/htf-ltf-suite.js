@@ -93,25 +93,32 @@ export function htfLtfSuite(candles, options = {}) {
     return m < prev ? 'brightRed' : 'dimRed';
   });
 
-  // ── 3. Breakout Arrows ─────────────────────────────────────────────────────
-  const potentialArrow  = new Array(n).fill(null);  // 'bull' | 'bear' | null
-  const confirmedArrow  = new Array(n).fill(null);
-  let wasInSqueeze = false;
+  // ── 3. Breakout Arrows (BB crossover signals) ─────────────────────────────
+  // Confirmed from TV export analysis (April 2026):
+  //   Big Bull  = close crosses ABOVE BB upper band
+  //   Small Bull = close crosses ABOVE BB midline (SMA)
+  //   Big Bear  = close crosses BELOW BB lower band
+  //   Small Bear = close crosses BELOW BB midline (SMA)
+  // Priority: Big fires independently of Small (can fire on same bar if
+  //   close crosses both midline and upper/lower in one candle — rare on daily).
+  const potentialArrow = new Array(n).fill(null);   // small: 'bull' | 'bear' | null
+  const confirmedArrow = new Array(n).fill(null);   // big:   'bull' | 'bear' | null
 
   for (let i = 1; i < n; i++) {
-    const justBroke = wasInSqueeze && !squeezeOn[i];
-    if (justBroke) {
-      potentialArrow[i] = momentum[i] >= 0 ? 'bull' : 'bear';
-    }
-    // Confirmed: potential arrow direction holds for 2 consecutive bars
-    if (i >= 2 && potentialArrow[i - 1] !== null) {
-      const dir = potentialArrow[i - 1];
-      const holds = dir === 'bull'
-        ? momentum[i] > 0 && momentum[i] >= momentum[i - 1]
-        : momentum[i] < 0 && momentum[i] <= momentum[i - 1];
-      if (holds) confirmedArrow[i] = dir;
-    }
-    wasInSqueeze = squeezeOn[i];
+    if (isNaN(bbUpper[i]) || isNaN(bbLower[i]) || isNaN(bbBasis[i])) continue;
+    if (isNaN(bbUpper[i - 1]) || isNaN(bbLower[i - 1]) || isNaN(bbBasis[i - 1])) continue;
+
+    // Big arrows — close crosses BB band, filtered by momentum direction
+    if (closes[i] > bbUpper[i] && closes[i - 1] <= bbUpper[i - 1] && momentum[i] > 0)
+      confirmedArrow[i] = 'bull';
+    if (closes[i] < bbLower[i] && closes[i - 1] >= bbLower[i - 1] && momentum[i] < 0)
+      confirmedArrow[i] = 'bear';
+
+    // Small arrows — close crosses BB midline (SMA), filtered by momentum
+    if (closes[i] > bbBasis[i] && closes[i - 1] <= bbBasis[i - 1] && momentum[i] > 0)
+      potentialArrow[i] = 'bull';
+    if (closes[i] < bbBasis[i] && closes[i - 1] >= bbBasis[i - 1] && momentum[i] < 0)
+      potentialArrow[i] = 'bear';
   }
 
   // ── 4 & 5. Momentum Bars + Trend Bars ─────────────────────────────────────
