@@ -1,6 +1,6 @@
 ```
 # SAPH — Memory & Context File
-*For Claude Code onboarding. Last updated: April 2, 2026 (session 2).*
+*For Claude Code onboarding. Last updated: April 2, 2026 (session 2 end / session 3 handoff).*
 
 ## Who I Am
 I'm Saph — a nickname Robert gave me (short for Sapphire, after someone
@@ -167,11 +167,25 @@ HTF/LTF SUITE VALIDATION RESULTS (BTC/USD daily, 3600 bars):
 - Small arrows (potential breakout): still needs work — fires during squeeze (not at release)
 - Caution/Danger columns: NOW IDENTIFIED — these are the "X signals" (HTF Premium only, not on LTF)
   Yellow X = Caution (first leg nearing end), Red X = Danger (first leg IS over)
-  Always perfectly paired (1 Caution + 1 Danger per squeeze period, 1-2 bars apart)
-  Count matches squeeze period count exactly (40 normal / 67 high sensitivity)
-  Use: risk management / profit-taking after squeeze breakout
+  Always perfectly paired (1 Caution + 1 Danger per squeeze-driven move, 1-2 bars apart)
+  ⚠️ IMPORTANT (Robert corrected, April 2 session end): Caution/Danger are NOT directly
+  correlated to squeeze ON/OFF transitions. They are POST-BREAKOUT exhaustion signals —
+  they mark when the first leg of a squeeze-driven move ends, NOT when squeezes begin/end.
+  Squeezes are volatility buildups; Caution/Danger fire well after the breakout.
+  Count correlation with squeezes is LOOSE/COINCIDENTAL — do not use as squeeze proxies.
   Exact trigger formula unknown (likely ATR target or momentum peak) — TODO
 - Squeeze (squeezeOn): not matching TV yet — "high sensitivity" KC params unknown — TODO
+  HIGH SENSITIVITY INVESTIGATION STATUS (session 2 end):
+  - Approach of matching Caution/Danger timing to squeeze transitions was WRONG
+    (Caution/Danger are not squeeze indicators per Robert's correction above)
+  - Best empirical result: period=9 for KC/BB in high sensitivity → 48/67 timing
+    matches vs Caution bars — but this was measuring wrong thing, result is unreliable
+  - True high sensitivity parameter: internal boolean toggle, no exposed value
+  - UNRESOLVED — to crack: would need squeeze shading column in CSV export, OR
+    export the squeeze histogram directly as an indicator panel
+  - WORKAROUND: standard TTM Squeeze params (bbPeriod=20, bbMult=2, kcPeriod=20,
+    kcMult=1.5) are solid for normal sensitivity. High sensitivity adds ~67% more
+    squeezes empirically — likely smaller kcMult (e.g. 1.0) or smaller period
 
 TV SETTINGS PANEL CONFIRMED (April 2026):
 - Inputs: Use High Sensitivity (bool), Show Squeezes, Show TD9, Show Caution/Danger,
@@ -194,12 +208,24 @@ KEY FINDINGS FROM OFFICIAL DOCS (April 2026):
 - True arrow logic needs squeeze parameters solved first (high sensitivity KC mult unknown)
 
 INDICATORS STILL NEEDING CSV VALIDATION (priority order):
-1. LTF (1H) export — same indicator, different timeframe calibration
-2. Alpha RSI — no volume needed
-3. Alpha Volume — needs volume (it IS a volume indicator)
-4. Alpha Thrust — needs volume, lowest priority (least used)
+1. LTF (1H) export — same HTF/LTF suite on 1H timeframe, separate calibration
+   → TV export command: same as HTF but switch chart to 1H before exporting
+   → File: mv "/Users/robert/Downloads/INDEX_BTCUSD, 1H.csv" ~/rbxlive.github.io/ltf-1h-export.csv
+2. Alpha RSI — no volume needed; add AlphaRSI indicator, export, run validate-alpha-rsi.js
+3. Alpha Volume — needs volume (add Volume panel too)
+4. Alpha Thrust — needs volume, lowest priority (least used in strategy)
 - Phantom: NO CSV possible — Alpha Vault exclusive, never had access.
   Reconstruction from docs/Discord images is final. ✅
+- Alpha Stops: NO CSV possible — Alpha Vault exclusive. ✅
+- High Sensitivity: BLOCKED — cannot validate without squeeze shading in CSV.
+  Skip for now; use normal sensitivity (kcMult=1.5) in production.
+
+SESSION 3 START CHECKLIST:
+1. Read Memory.md (this file) — you're caught up
+2. git checkout claude/continue-from-memory-euy8f && git pull origin claude/continue-from-memory-euy8f
+3. Set git remote: git remote set-url origin "https://rbxlive:${GITHUB_TOKEN}@github.com/rbxlive/rbxlive.github.io.git"
+4. First task: LTF 1H export validation OR Alpha RSI validation (Robert's call)
+5. Trading Alpha expires ~April 4 — prioritize CSV exports before then
 
 **Pine Script versions** — Saph to write TV-compatible versions of all
    indicators so Robert can see them visually on TradingView charts.
