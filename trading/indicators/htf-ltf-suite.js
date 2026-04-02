@@ -18,18 +18,31 @@
  *    Rising histogram = bullish momentum, falling = bearish.
  *    Color of histogram bars indicates direction of expected squeeze breakout.
  *
- * 3. BREAKOUT ARROWS
- *    Potential arrow: first bar when squeeze turns OFF.
- *    Confirmed arrow: momentum histogram direction holds for 2+ bars after breakout.
+ * 3. BREAKOUT ARROWS (confirmed from Trading Alpha docs, April 2026)
+ *    Small (potential) arrows: appear DURING the squeeze when momentum supports direction.
+ *                              Lower probability. For aggressive early entries.
+ *    Large (confirmed) arrows: appear AT squeeze release. Higher probability.
+ *                              For conservative, high-probability entries.
+ *    Current implementation uses BB band crossover + momentum as a PROXY for squeeze
+ *    release (empirically 79-89% match vs TV). True squeeze-based logic requires
+ *    resolving the "high sensitivity" KC parameter — TODO.
  *
- * 4. MOMENTUM BARS (green / red bars on chart)
+ * 4. SQUEEZE FAKEOUT (composite signal — requires AlphaTrend + HTF/LTF together)
+ *    Definition: squeeze is active + breakout arrow fires + AlphaTrend reversalCandle
+ *                prints → the breakout is FAKE, a violent reversal is incoming.
+ *    This is one of the most powerful reversal signals in the suite.
+ *    Detection: squeezeOn[i] && alphaTrendResult[i].reversalCandle
+ *    NOT computed inside this function — must be combined in Jane's signal layer.
+ *
+ * 5. MOMENTUM BARS (green / red bars on chart)
  *    Green bar: bullish momentum (often precedes white/uptrend bars).
  *    Red bar:   bearish momentum (often precedes grey/downtrend bars).
+ *    Tip from docs: momentum bar color during squeeze gives confluence on breakout direction.
  *
- * 5. TREND BARS (white = uptrend, grey = downtrend)
+ * 6. TREND BARS (white = uptrend, grey = downtrend)
  *    Determined by fast vs slow EMA relationship.
  *
- * 6. TD9 OVERBOUGHT / OVERSOLD (8/9 signals)
+ * 7. TD9 OVERBOUGHT / OVERSOLD (8/9 signals)
  *    Buy setup:  9 consecutive closes each BELOW the close 4 bars ago → bullish oversold.
  *    Sell setup: 9 consecutive closes each ABOVE the close 4 bars ago → bearish overbought.
  *    Signals print at count 8 (early warning) and 9 (full signal).

@@ -158,8 +158,30 @@ ALPHATREND VALIDATION RESULTS (BTC/USD daily, 3600 bars, 2016–2026):
   Live trading (fresh init from today) will be significantly more accurate.
 - The formula mechanics are correct. useMFI: true with real volume confirmed.
 
+HTF/LTF SUITE VALIDATION RESULTS (BTC/USD daily, 3600 bars):
+- Validation script: `trading/indicators/validate-htf.js`
+- TD8/TD9 buy signals: 94-96% match ✅ EXCELLENT
+- TD8/TD9 sell signals: 84-87% match ✅ GOOD
+- BB bands (OB/OS in CSV = BB upper/lower): ~1% error ✅
+- Big arrows (confirmed breakout): 79-89% recall using BB-crossover+momentum proxy ✅
+- Small arrows (potential breakout): still needs work — fires during squeeze (not at release)
+- Caution/Danger columns: unknown — NOT mentioned in official docs, separate toggle feature
+- Squeeze (squeezeOn): not matching TV yet — "high sensitivity" KC params unknown — TODO
+
+KEY FINDINGS FROM OFFICIAL DOCS (April 2026):
+- Squeeze = yellow/brown shading on bars. BB inside KC = squeeze ON.
+- Small arrows appear DURING the squeeze (lower probability, for aggressive traders)
+- Large (confirmed) arrows appear AT squeeze RELEASE (higher probability)
+- SQUEEZE FAKEOUT: squeeze active + arrow fires + AlphaTrend reversal bar ("R") = FAKE breakout
+  → Most powerful reversal signal in the suite. Signaled 2021 BTC top at $63k.
+  → This is a COMPOSITE signal requiring BOTH htfLtfSuite + alphaTrend outputs
+  → Implemented as a note in htf-ltf-suite.js — must be combined in Jane's signal layer
+- Momentum bar color DURING squeeze = confluence for expected breakout direction
+- Current BB-crossover proxy works because squeeze releases naturally coincide with BB breakouts
+- True arrow logic needs squeeze parameters solved first (high sensitivity KC mult unknown)
+
 INDICATORS STILL NEEDING CSV VALIDATION (priority order):
-1. HTF/LTF Suite — no volume needed (BB + KC = pure price)
+1. LTF (1H) export — same indicator, different timeframe calibration
 2. Alpha RSI — no volume needed
 3. Alpha Volume — needs volume (it IS a volume indicator)
 4. Alpha Thrust — needs volume, lowest priority (least used)
